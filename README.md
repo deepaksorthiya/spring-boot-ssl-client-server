@@ -1,31 +1,76 @@
 [![Java Maven Build Test](https://github.com/deepaksorthiya/spring-boot-ssl-client-server/actions/workflows/maven-build.yml/badge.svg)](https://github.com/deepaksorthiya/spring-boot-ssl-client-server/actions/workflows/maven-build.yml)
+---
+
+### ** Spring Boot SSL using PKCS12 JKS and PEM format **
+
+---
 
 # Getting Started
 
-### Requirements:
+## Requirements:
 
 ```
-Git: 2.47.1
-Spring Boot: 3.4.1
+Git: 2.49.0
+Spring Boot: 3.4.4
 Maven: 3.9+
-Java: 17
-Docker Desktop(Optional): Tested on 4.37.1
+Java: 21
+Docker Desktop(Optional): Tested on 4.39.0
 ```
 
-### Clone this repository:
+## (Optional)Generate PKCS/JKS/PEM files
+
+Required files are already in class path. If you want to generate your own self-signed then use below commands.
+generate `PKCS12` file
+
+```bash
+keytool -genkeypair -alias springbootssl -keyalg RSA -keysize 4096 -storetype PKCS12 -keystore springbootssl.p12 -validity 36500
+```
+
+generate `JKS` file from PKCS12
+
+```bash
+keytool -importkeystore -srckeystore springbootssl.p12 -srcstoretype pkcs12 -destkeystore springbootssl.jks -deststoretype jks
+```
+
+generate private key and certificate file
+
+```bash
+openssl req -x509 -subj "/CN=localhost" -keyout private.key -out certificate.crt -sha256 -days 36500 -nodes -newkey rsa
+```
+
+for windows OS
+
+```bash
+openssl req -x509 -subj "//CN=localhost" -keyout private.key -out certificate.crt -sha256 -days 36500 -nodes -newkey rsa
+```
+
+## Clone this repository:
 
 ```bash
 git clone https://github.com/deepaksorthiya/spring-boot-ssl-client-server.git
 cd spring-boot-ssl-client-server
 ```
 
-### Build Project:
+## Pre-requisite Configuration
+
+check file [application.properties](src/main/resources/application.properties). this file contains PKCS12 and PEM based
+ssl config.
+
+## Build Project:
 
 ```bash
 ./mvnw clean package
 ```
 
-### (Optional) Build Docker Image(docker should be running):
+### Run Project:
+
+```bash
+./mvnw spring-boot:run
+```
+
+## (Optional)Run Using Docker(docker should be running)
+
+### Build Docker Image
 
 ```bash
 ./mvnw clean spring-boot:build-image -DskipTests
@@ -37,22 +82,28 @@ OR
 docker build -t deepaksorthiya/spring-boot-ssl-client-server:0.0.1-SNAPSHOT . 
 ```
 
-### Run Project:
-
-```bash
-./mvnw spring-boot:run
-```
-
-### (Optional)Run Using Docker
+### Run Docker Image
 
 ```bash
 docker run --name spring-boot-ssl-client-server -p 8080:8080 deepaksorthiya/spring-boot-ssl-client-server:0.0.1-SNAPSHOT
 ```
 
-### Reference Documentation
+## Testing
+
+```bash
+curl -v -k https://localhost:8443/server-call
+```
+
+```bash
+curl -v -k https://localhost:8443/client-call
+```
+
+## Reference Documentation
 
 For further reference, please consider the following sections:
 
+* [SSL Spring Boot](https://spring.io/blog/2023/11/07/ssl-hot-reload-in-spring-boot-3-2-0)
+* [SSL Demo](https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl)
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/maven-plugin)
 * [Create an OCI image](https://docs.spring.io/spring-boot/maven-plugin/build-image.html)
@@ -62,7 +113,7 @@ For further reference, please consider the following sections:
 * [Validation](https://docs.spring.io/spring-boot//io/validation.html)
 * [Flyway Migration](https://docs.spring.io/spring-boot/how-to/data-initialization.html#howto.data-initialization.migration-tool.flyway)
 
-### Guides
+## Guides
 
 The following guides illustrate how to use some features concretely:
 
@@ -74,7 +125,7 @@ The following guides illustrate how to use some features concretely:
 * [Validation](https://spring.io/guides/gs/validating-form-input/)
 * [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
 
-### Maven Parent overrides
+## Maven Parent overrides
 
 Due to Maven's design, elements are inherited from the parent POM to the project POM.
 While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the
