@@ -23,7 +23,10 @@ public class ClientServerController {
 
     @GetMapping("/client-call")
     public ResponseEntity<String> clientCall() {
-        String serverPort = environment.getProperty("server.port", "8080");
+        String serverPort = environment.getProperty("server.port");
+        if (serverPort == null || serverPort.isEmpty() || serverPort.equals("0")) {
+            serverPort = environment.getProperty("local.server.port");
+        }
         String url = "https://localhost:" + serverPort + "/server-call";
         ResponseEntity<String> result = restClient.get().uri(url).retrieve().toEntity(String.class);
         return result;

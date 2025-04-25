@@ -11,7 +11,7 @@
 
 ```
 Git: 2.49.0
-Spring Boot: 3.4.4
+Spring Boot: 3.4.5
 Maven: 3.9+
 Java: 21
 Docker Desktop(Optional): Tested on 4.39.0
@@ -56,7 +56,7 @@ cd spring-boot-ssl-client-server
 check file [application.properties](src/main/resources/application.properties). this file contains PKCS12 and PEM based
 ssl config.
 
-## Build Project:
+## Build Project and Run Test Cases:
 
 ```bash
 ./mvnw clean package
@@ -104,6 +104,7 @@ For further reference, please consider the following sections:
 
 * [SSL Spring Boot](https://spring.io/blog/2023/11/07/ssl-hot-reload-in-spring-boot-3-2-0)
 * [SSL Demo](https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl)
+* [SSL Smoke Test](https://github.com/spring-projects/spring-boot/tree/main/spring-boot-tests/spring-boot-smoke-tests/spring-boot-smoke-test-tomcat-ssl)
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/maven-plugin)
 * [Create an OCI image](https://docs.spring.io/spring-boot/maven-plugin/build-image.html)
