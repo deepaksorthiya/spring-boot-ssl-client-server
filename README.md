@@ -10,11 +10,11 @@
 ## Requirements:
 
 ```
-Git: 2.49.0
-Spring Boot: 3.5.5
+Git: 2.51.0
+Spring Boot: 3.5.6
 Maven: 3.9+
-Java: 24
-Docker Desktop(Optional): Tested on 4.39.0
+Java: 25
+Docker Desktop(Optional): Tested on 4.47.0
 ```
 
 ## (Optional)Generate PKCS/JKS/PEM files
