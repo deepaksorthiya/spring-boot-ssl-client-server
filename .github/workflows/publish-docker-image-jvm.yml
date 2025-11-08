@@ -1,11 +1,14 @@
-name: Publish a Docker image to Github and DockerHub
+#  manual docker image push to GitHub and DockerHub using Dockerfile with non-native JVM mode Using Dockerfile
+name: Publish a Docker image to Github and DockerHub Using Dockerfile
 
 on:
-  release:
-    types: [ published ]
+  #  release:
+  #    types: [ published ]
+  workflow_dispatch:
 
 jobs:
   build:
+    name: Publish a Docker image to Github and DockerHub Using Dockerfile
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -15,9 +18,11 @@ jobs:
     env:
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
+      DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
 
     steps:
-      - name: Checkout
+
+      - name: Checkout Repository
         uses: actions/checkout@v5
 
       - name: Login to DockerHub
@@ -38,7 +43,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            deepaksorthiya/spring-boot-ssl-client-server
+            ${{ env.DOCKER_USERNAME }}/${{ github.event.repository.name }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push image
@@ -51,7 +56,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Attest
-        uses: actions/attest-build-provenance@v3.0.0
+        uses: actions/attest-build-provenance@v2.4.0
         id: attest
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
