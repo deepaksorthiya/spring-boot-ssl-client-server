@@ -1,4 +1,4 @@
-[![Java Maven Build Test](https://github.com/deepaksorthiya/spring-boot-ssl-client-server/actions/workflows/maven-build.yml/badge.svg)](https://github.com/deepaksorthiya/spring-boot-ssl-client-server/actions/workflows/maven-build.yml)
+[![Java Maven Build Test](https://github.com/deepaksorthiya/spring-boot-ssl-client-server/actions/workflows/maven-jvm-non-native-build.yml/badge.svg)](https://github.com/deepaksorthiya/spring-boot-ssl-client-server/actions/workflows/maven-jvm-non-native-build.yml)
 ---
 
 ### ** Spring Boot SSL using PKCS12 JKS and PEM format **
@@ -10,8 +10,8 @@
 ## Requirements:
 
 ```
-Git: 2.51.0
-Spring Boot: 3.5.6
+Git: 2.51+
+Spring Boot: 3.5.7
 Maven: 3.9+
 Java: 25
 Docker Desktop(Optional): Tested on 4.47.0
